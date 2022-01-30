@@ -6,24 +6,22 @@ import "package:latlong2/latlong.dart";
 import 'package:staying_safe/screens/copyrights_page.dart';
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
-final List<Marker> markers = List.empty(growable: true);
 
-class MapWidget extends StatelessWidget {
+final List<String> addresses = List.empty(growable: true);
+
+class MapWidget extends StatefulWidget {
   const MapWidget({Key? key}) : super(key: key);
 
+  @override
+  _MapWidgetState createState() => _MapWidgetState();
+}
+
+class _MapWidgetState extends State<MapWidget> {
+  bool _isVisible = false;
   @override
   Widget build(BuildContext context) {
     final canterburyCoords =
         LatLng(51.27597, 1.07561); //update this line to be current location
-
-    final marker = Marker(
-      width: 50.0,
-      height: 55.0,
-      point: canterburyCoords,
-      builder: (BuildContext context) =>
-          const Icon(Icons.location_on, size: 60.0, color: Colors.black),
-    );
-    markers.add(marker);
 
     return MaterialApp(
       title: "TomTom Map",
@@ -40,7 +38,17 @@ class MapWidget extends StatelessWidget {
                   additionalOptions: {"apiKey": apiKey},
                 ),
                 MarkerLayerOptions(
-                  markers: markers,
+                  markers: [
+                    Marker(
+                      width: 80.0,
+                      height: 80.0,
+                      point: LatLng(51.27597, 1.07561),
+                      builder: (BuildContext context) => const Icon(
+                          Icons.location_on,
+                          size: 60.0,
+                          color: Colors.black),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -53,12 +61,37 @@ class MapWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(30),
                 alignment: Alignment.topLeft,
                 child: TextField(
-                  onSubmitted: (value) {
+                  onSubmitted: (value) async {
                     print('$value');
-                    getAddresses(value, canterburyCoords.latitude,
+                    await getAddresses(value, canterburyCoords.latitude,
                         canterburyCoords.longitude);
+                    print("after getAddresses");
+                    Future.delayed(const Duration(milliseconds: 1000), () {
+                      setState(() {
+                        print("inside set state");
+                        _isVisible = !_isVisible;
+                        print("after visible");
+                      });
+                      print("after state set");
+                    });
                   },
-                ))
+                )),
+            Visibility(
+              visible: _isVisible,
+              child: ListView.builder(
+                padding: const EdgeInsets.all(10),
+                itemCount: addresses.length,
+                itemBuilder: (BuildContext context, int index) {
+                  print("before address container output");
+                  return Container(
+                    height: 50,
+                    color: Colors.amber,
+                    alignment: Alignment.bottomCenter,
+                    child: Center(child: Text(addresses[index])),
+                  );
+                },
+              ),
+            ),
           ],
         )),
         floatingActionButton: FloatingActionButton(
@@ -123,24 +156,27 @@ void parseGeneralCopyrights(jsonResponse, StringBuffer sb) {
 @param lat, latitude for search bias
 @param lon, longitude for search bias
  */
-void getAddresses(value, lat, lon) async {
+getAddresses(value, lat, lon) async {
   final Map<String, String> queryParameters = {'key': '$apiKey'};
+  queryParameters['limit'] = '5';
   queryParameters['lat'] = '$lat';
   queryParameters['lon'] = '$lon';
 
   var response = await http.get(Uri.https(
-      'api.tomtom.com', '/search/2/search/$value.json', queryParameters));
+      'api.tomtom.com', '/search/2/poiSearch/$value.json', queryParameters));
   var jsonData = convert.jsonDecode(response.body);
   print('$jsonData');
   var results = jsonData['results'];
   for (var element in results) {
-    var position = element['position'];
-    var marker = Marker(
-        point: LatLng(position['lat'], position['lon']),
-        width: 50.0,
-        height: 50.0,
-        builder: (BuildContext context) =>
-            const Icon(Icons.location_on, size: 40.0, color: Colors.blue));
-    markers.add(marker);
+    var address = element['address'];
+    var fullAddress = address['freeFormAddress'];
+    addresses.add(fullAddress);
+    // var marker = Marker(
+    //     point: LatLng(position['lat'], position['lon']),
+    //     width: 50.0,
+    //     height: 50.0,
+    //     builder: (BuildContext context) =>
+    //         const Icon(Icons.location_on, size: 40.0, color: Colors.blue));
+    // markers.add(marker);
   }
 }
