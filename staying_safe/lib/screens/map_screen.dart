@@ -36,7 +36,7 @@ class _MapscreenState extends State<Mapscreen> {
         ],
       ),
       // body is the majority of the screen.
-      body: const MapWidget(),
+      body: MapWidget(),
     );
   }
 
