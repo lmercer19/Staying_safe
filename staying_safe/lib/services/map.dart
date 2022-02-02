@@ -8,6 +8,7 @@ import 'package:staying_safe/screens/copyrights_page.dart';
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
 
 final List<String> addresses = List.empty(growable: true);
+//final Map<String, String> currentLocation = {'key': '$apiKey'};
 
 class MapWidget extends StatefulWidget {
   const MapWidget({Key? key}) : super(key: key);
@@ -83,10 +84,18 @@ class _MapWidgetState extends State<MapWidget> {
                 itemCount: addresses.length,
                 itemBuilder: (BuildContext context, int index) {
                   print("before address container output");
-                  return Container(
-                    height: 50,
-                    color: Colors.amber,
-                    alignment: Alignment.bottomCenter,
+                  return TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(16.0),
+                      primary: Colors.black,
+                      textStyle: const TextStyle(fontSize: 20),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isVisible = !_isVisible;
+                      });
+                      //destinationLatLong = ;
+                    },
                     child: Center(child: Text(addresses[index])),
                   );
                 },
@@ -163,14 +172,16 @@ getAddresses(value, lat, lon) async {
   queryParameters['lon'] = '$lon';
 
   var response = await http.get(Uri.https(
-      'api.tomtom.com', '/search/2/poiSearch/$value.json', queryParameters));
+      'api.tomtom.com', '/search/2/search/$value.json', queryParameters));
   var jsonData = convert.jsonDecode(response.body);
   print('$jsonData');
   var results = jsonData['results'];
   for (var element in results) {
     var address = element['address'];
-    var fullAddress = address['freeFormAddress'];
+    var fullAddress = address['freeformAddress'];
+
     addresses.add(fullAddress);
+    //addressesLatLong.add(latLong);
     // var marker = Marker(
     //     point: LatLng(position['lat'], position['lon']),
     //     width: 50.0,
