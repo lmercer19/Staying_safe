@@ -3,6 +3,7 @@ import 'package:staying_safe/screens/settings_screen.dart';
 import "package:flutter/material.dart";
 import 'package:staying_safe/screens/auth_screen.dart';
 import "package:staying_safe/services/map.dart";
+import 'package:staying_safe/styles/styles.dart';
 
 class Mapscreen extends StatefulWidget {
   const Mapscreen({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _MapscreenState extends State<Mapscreen> {
         actions: [
           PopupMenuButton<int>(
               icon: const Icon(Icons.menu),
-              onSelected: (item) => onSelected(context, item),
+              onSelected: (item) => Methods.onSelected(context, item),
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(
                       value: 0,
@@ -38,25 +39,5 @@ class _MapscreenState extends State<Mapscreen> {
       // body is the majority of the screen.
       body: const MapWidget(),
     );
-  }
-
-  void onSelected(BuildContext context, int item) {
-    switch (item) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const setting()),
-        );
-        break;
-      case 1:
-        () async {
-          await FirebaseAuth.instance.signOut();
-        };
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AuthApp()),
-        );
-        break;
-    }
   }
 }

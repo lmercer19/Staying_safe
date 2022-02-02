@@ -30,26 +30,6 @@ class _HomescreenState extends State<Homescreen> {
     });
   }
 
-  void onSelected(BuildContext context, int item) {
-    switch (item) {
-      case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const setting()),
-        );
-        break;
-      case 1:
-        () async {
-          await FirebaseAuth.instance.signOut();
-        };
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const AuthApp()),
-        );
-        break;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

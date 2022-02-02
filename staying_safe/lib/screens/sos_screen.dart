@@ -16,25 +16,6 @@ class SOSscreen extends StatefulWidget {
 }
 
 //for settings and logout buttons.
-void onSelected(BuildContext context, int item) {
-  switch (item) {
-    case 0:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const setting()),
-      );
-      break;
-    case 1:
-      () async {
-        await FirebaseAuth.instance.signOut();
-      };
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AuthApp()),
-      );
-      break;
-  }
-}
 
 bool _isVisibleExit = false;
 bool _isVisibleTimer = true;
@@ -51,7 +32,7 @@ class _SOSscreenState extends State<SOSscreen> {
       actions: [
         PopupMenuButton<int>(
             icon: const Icon(Icons.menu),
-            onSelected: (item) => onSelected(context, item),
+            onSelected: (item) => Methods.onSelected(context, item),
             itemBuilder: (context) => [
                   const PopupMenuItem<int>(
                     value: 0,

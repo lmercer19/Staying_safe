@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:staying_safe/styles/styles.dart';
 import 'contactlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -33,8 +34,30 @@ class _ContactPageState extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(title: Text('Contacts List')), body: _body()));
+          home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Contacts List'),
+          automaticallyImplyLeading: false, //remove backbutton
+          centerTitle: true,
+          actions: [
+            PopupMenuButton<int>(
+                icon: const Icon(Icons.menu),
+                onSelected: (item) => Methods.onSelected(context, item),
+                itemBuilder: (context) => [
+                      const PopupMenuItem<int>(
+                        value: 0,
+                        child: Text('Settings'),
+                      ),
+                      const PopupMenuItem<int>(
+                        value: 1,
+                        child: Text('Log Out'),
+                      ),
+                    ])
+          ],
+        ),
+        // body is the majority of the screen.
+        body: _body(),
+      ));
 
   Widget _body() {
     if (_permissionDenied) return Center(child: Text('Permission denied'));

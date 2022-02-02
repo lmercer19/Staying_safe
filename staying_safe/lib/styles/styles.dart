@@ -1,15 +1,16 @@
 // ignore_for_file: unnecessary_new
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:staying_safe/screens/auth_screen.dart';
+import 'package:staying_safe/screens/home_screen.dart';
+import 'package:staying_safe/screens/sos_screen.dart';
 //import 'package:staying_safe/styles/util.dart';
 
 class Styles {
   static final ButtonStyle loginStyle = ElevatedButton.styleFrom(
       primary: Colors.black,
       minimumSize: const Size(100, 50),
-      // //shape: new RoundedRectangleBorder(
-      //   borderRadius: new BorderRadius.circular(30.0),
-      // ),
       textStyle: const TextStyle(
           color: Colors.black, //fontSize: 20,
           fontStyle: FontStyle.italic));
@@ -45,4 +46,26 @@ class Styles {
       primary: Colors.blue,
       padding: const EdgeInsets.all(10),
       textStyle: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold));
+}
+
+class Methods {
+  static onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const Homescreen()),
+        );
+        break;
+      case 1:
+        () async {
+          await FirebaseAuth.instance.signOut();
+        };
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const AuthApp()),
+        );
+        break;
+    }
+  }
 }
