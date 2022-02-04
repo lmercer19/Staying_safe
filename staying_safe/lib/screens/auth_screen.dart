@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
                                                     passwordcontroller.text);
                                         setState(() {});
                                         isLoggedIn = true;
-                                        sendUID();
+                                        updateDatabase();
                                         error.clear();
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'weak-password') {
@@ -207,13 +207,17 @@ class _HomeState extends State<Home> {
   }
 
 /*
-sendUID() sends unique ID to realtime database. 
+updateDatabas() sends unique ID to realtime database. 
 Called after user successfully creates an account.
 */
-  void sendUID() {
+  void updateDatabase() async {
     try {
       var u = user?.uid;
-      database.update({u!: ""}).then((_) => print("database updated"));
+      database.update({
+        u!: {
+          "Personal_Information": {"Email: ": emailcontroller.text}
+        }
+      }).then((_) => print("database updated"));
     } catch (e) {
       print("You got an error! $e");
     }
