@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:staying_safe/screens/auth_screen.dart';
+import 'package:staying_safe/screens/auth_screen.dart'; //auth_screen imported to get UID.
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
 final database = FirebaseDatabase.instance.ref("users/" + user!.uid + "/map/");
@@ -44,6 +44,9 @@ class _MapWidgetState extends State<MapWidget> {
     });
   }
 
+/*
+updateDatabaseUserLocation() sends user's lat long coords to database. 
+*/
   void updateDatabaseUserLocation() {
     try {
       database.update({"Lat: ": latitudedata, "Long: ": longitudedata}).then(
