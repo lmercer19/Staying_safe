@@ -5,8 +5,12 @@ import "package:flutter_map/flutter_map.dart";
 import "package:latlong2/latlong.dart";
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:staying_safe/screens/auth_screen.dart';
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
+final database = FirebaseDatabase.instance.ref("users/" + user!.uid + "/map/");
 
 final List<String> addresses = List.empty(growable: true);
 //final Map<String, String> currentLocation = {'key': '$apiKey'};
@@ -36,7 +40,17 @@ class _MapWidgetState extends State<MapWidget> {
       latitudedata = '${geoposition.latitude}';
       print(latitudedata);
       print(longitudedata);
+      updateDatabaseUserLocation();
     });
+  }
+
+  void updateDatabaseUserLocation() {
+    try {
+      database.update({"Lat: ": latitudedata, "Long: ": longitudedata}).then(
+          (_) => print("database updated"));
+    } catch (e) {
+      print("You got an error! $e");
+    }
   }
 
   @override
