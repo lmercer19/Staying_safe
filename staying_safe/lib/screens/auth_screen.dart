@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:staying_safe/screens/home_screen.dart';
 import 'package:staying_safe/styles/styles.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 final emailcontroller = TextEditingController();
 final passwordcontroller = TextEditingController();
 bool ispassword = true;
 bool isLoggedIn = false;
 User? user = FirebaseAuth.instance.currentUser;
+final database = FirebaseDatabase.instance.ref("users/");
 final appbar = AppBar(title: const Text('Staying safe'));
 var error = StringBuffer();
 
@@ -137,6 +140,7 @@ class _HomeState extends State<Home> {
                                                     passwordcontroller.text);
                                         setState(() {});
                                         isLoggedIn = true;
+                                        updateDatabase();
                                         error.clear();
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'weak-password') {
@@ -199,5 +203,22 @@ class _HomeState extends State<Home> {
       ispassword = true;
     }
     setState(() {});
+  }
+
+/*
+updateDatabase() sends unique ID to realtime database. 
+Called after user successfully creates an account.
+*/
+  void updateDatabase() async {
+    try {
+      var u = user?.uid;
+      database.update({
+        u!: {
+          "Personal_Information": {"Email: ": emailcontroller.text}
+        }
+      }).then((_) => print("database updated"));
+    } catch (e) {
+      print("You got an error! $e");
+    }
   }
 }
