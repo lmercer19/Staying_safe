@@ -207,7 +207,7 @@ class _HomeState extends State<Home> {
   }
 
 /*
-updateDatabas() sends unique ID to realtime database. 
+updateDatabase() sends unique ID to realtime database. 
 Called after user successfully creates an account.
 */
   void updateDatabase() async {
