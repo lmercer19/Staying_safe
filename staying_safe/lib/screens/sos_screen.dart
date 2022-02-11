@@ -26,13 +26,13 @@ class _SOSscreenState extends State<SOSscreen> {
   Widget build(BuildContext context) {
     final appbar = AppBar(
       backgroundColor: Colors.blue,
-      title: const Text('Kent Walksafe'),
+      title: const Text('SOS'),
       automaticallyImplyLeading: false, //remove backbutton
       centerTitle: true,
       actions: [
         PopupMenuButton<int>(
             icon: const Icon(Icons.menu),
-            onSelected: (item) => Methods.onSelected(context, item),
+            onSelected: (item) => Methods.onSetting(context, item),
             itemBuilder: (context) => [
                   const PopupMenuItem<int>(
                     value: 0,
@@ -48,7 +48,7 @@ class _SOSscreenState extends State<SOSscreen> {
 
     return MaterialApp(
         home: Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.white,
       appBar: appbar,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -40,8 +40,7 @@ class _HomeState extends State<Home> {
     final appbarheight = appbar.preferredSize.height;
 
     return Scaffold(
-        backgroundColor: Colors.grey,
-        appBar: appbar,
+        backgroundColor: Colors.white,
         //Logged ' + (user == null ? 'out' : 'in') + ')'
         body: Padding(
             padding: const EdgeInsets.all(60.0),
@@ -55,6 +54,7 @@ class _HomeState extends State<Home> {
                         (Image.asset("images/Logo.png")),
                         TextFormField(
                           key: const ValueKey("Email"),
+                          style: Styles.logintext,
                           textAlign: TextAlign.left,
                           decoration: const InputDecoration(
                             hintText: "Email",
@@ -65,6 +65,7 @@ class _HomeState extends State<Home> {
                         TextField(
                           key: const ValueKey("password"),
                           textAlign: TextAlign.left,
+                          style: Styles.logintext,
                           obscureText: ispassword,
                           decoration: InputDecoration(
                               hintText: "Password",
@@ -77,13 +78,22 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 20,
                         ),
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                        ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: ElevatedButton(
-                                    style: Styles.loginStyle,
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.black,
+                                        fixedSize: Size(screenwidth * 0.3, 50),
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        )),
                                     //sign in button
                                     child: const Text('Sign In '),
                                     onPressed: () async {
@@ -127,7 +137,13 @@ class _HomeState extends State<Home> {
                                 padding: const EdgeInsets.all(12.0),
                                 child: ElevatedButton(
                                     child: const Text('Sign Up '),
-                                    style: Styles.loginStyle,
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.black,
+                                        fixedSize: Size(screenwidth * 0.3, 50),
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        )),
                                     onPressed: () async {
                                       error.clear();
                                       try {
@@ -173,7 +189,11 @@ class _HomeState extends State<Home> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.black,
-                                  fixedSize: const Size(200, 50)),
+                                  fixedSize: Size(screenwidth / 2, 50),
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
                               onPressed: () async {
                                 if (emailcontroller.text == '') {
                                   const snackBar = SnackBar(

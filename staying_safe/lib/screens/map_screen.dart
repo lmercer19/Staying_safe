@@ -17,13 +17,13 @@ class _MapscreenState extends State<Mapscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kent Walksafe'),
+        title: const Text('Home'),
         automaticallyImplyLeading: false, //remove backbutton
         centerTitle: true,
         actions: [
           PopupMenuButton<int>(
               icon: const Icon(Icons.menu),
-              onSelected: (item) => Methods.onSelected(context, item),
+              onSelected: (item) => Methods.onSetting(context, item),
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(
                       value: 0,

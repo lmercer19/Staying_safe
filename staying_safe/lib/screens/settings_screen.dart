@@ -22,7 +22,7 @@ class _settingState extends State<setting> {
         actions: [
           PopupMenuButton<int>(
               icon: const Icon(Icons.menu),
-              onSelected: (item) => Methods.onSelected(context, item),
+              onSelected: (item) => Methods.onHome(context, item),
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(
                       value: 0,
