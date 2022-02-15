@@ -37,15 +37,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
-    final appbarheight = appbar.preferredSize.height;
 
     return Scaffold(
         backgroundColor: Colors.white,
-        //Logged ' + (user == null ? 'out' : 'in') + ')'
         body: Padding(
-            padding: const EdgeInsets.all(60.0),
+            padding: const EdgeInsets.all(40),
             child: SizedBox(
-                height: (screenHeight - appbarheight),
+                height: screenHeight,
                 width: screenwidth,
                 child: Builder(builder: (BuildContext context) {
                   return Column(
@@ -85,61 +83,62 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Colors.black,
-                                        fixedSize: Size(screenwidth * 0.3, 50),
-                                        textStyle: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                        )),
-                                    //sign in button
-                                    child: const Text('Sign In '),
-                                    onPressed: () async {
-                                      error.clear();
-                                      try {
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                                email: emailcontroller.text,
-                                                password:
-                                                    passwordcontroller.text);
-                                        isLoggedIn = true;
-                                        setState(() {});
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.black,
+                                          fixedSize:
+                                              Size(screenwidth * 0.33, 50),
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                          )),
+                                      //sign in button
+                                      child: const Text('Sign In '),
+                                      onPressed: () async {
                                         error.clear();
-                                      } on FirebaseAuthException catch (e) {
-                                        if (e.code == 'user-not-found') {
-                                          error.write(
-                                              'No user found for that email.');
-                                        } else if (e.code == 'wrong-password') {
-                                          error.write(
-                                              'Wrong password provided for that user');
+                                        try {
+                                          await FirebaseAuth.instance
+                                              .signInWithEmailAndPassword(
+                                                  email: emailcontroller.text,
+                                                  password:
+                                                      passwordcontroller.text);
+                                          isLoggedIn = true;
+                                          setState(() {});
+                                          error.clear();
+                                        } on FirebaseAuthException catch (e) {
+                                          if (e.code == 'user-not-found') {
+                                            error.write(
+                                                'No user found for that email.');
+                                          } else if (e.code ==
+                                              'wrong-password') {
+                                            error.write(
+                                                'Wrong password provided for that user');
+                                          }
+                                          print(error);
                                         }
-                                        print(error);
-                                      }
-                                      final snackBar = SnackBar(
-                                        content: Text(error.toString()),
-                                      );
-                                      if (isLoggedIn == true) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Homescreen()),
+                                        final snackBar = SnackBar(
+                                          content: Text(error.toString()),
                                         );
-                                      } else if (isLoggedIn == false) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      }
-                                    }),
-                              ),
+                                        if (isLoggedIn == true) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Homescreen()),
+                                          );
+                                        } else if (isLoggedIn == false) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                      })),
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: ElevatedButton(
                                     child: const Text('Sign Up '),
                                     style: ElevatedButton.styleFrom(
                                         primary: Colors.black,
-                                        fixedSize: Size(screenwidth * 0.3, 50),
+                                        fixedSize: Size(screenwidth * 0.33, 50),
                                         textStyle: const TextStyle(
                                           color: Colors.black,
                                           fontSize: 20,
@@ -189,7 +188,7 @@ class _HomeState extends State<Home> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.black,
-                                  fixedSize: Size(screenwidth / 2, 50),
+                                  fixedSize: Size(screenwidth * 0.6, 50),
                                   textStyle: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,

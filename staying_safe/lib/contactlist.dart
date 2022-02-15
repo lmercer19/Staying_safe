@@ -4,6 +4,7 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:staying_safe/styles/styles.dart';
 
 class ContactList extends StatelessWidget {
   final Contact contact;
