@@ -48,8 +48,10 @@ class _HomescreenState extends State<Homescreen> {
             label: 'SOS',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Trusted contacts',
+            icon: Icon(
+              Icons.account_circle,
+            ),
+            label: 'Contacts',
           ),
         ],
         currentIndex: _selectedIndex,

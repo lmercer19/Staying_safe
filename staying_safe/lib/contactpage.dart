@@ -35,13 +35,21 @@ class _ContactPageState extends State<ContactPage> {
   @override
   Widget build(BuildContext context) => MaterialApp(
       home: Scaffold(
+          backgroundColor: Colors.grey[850],
           appBar: AppBar(
-            title: Text('Contacts List'),
+            backgroundColor: Colors.grey[200],
+            title: const Text(
+              'Contacts List',
+              style: TextStyle(color: Colors.black),
+            ),
             automaticallyImplyLeading: false, //remove backbutton
             centerTitle: true,
             actions: [
               PopupMenuButton<int>(
-                  icon: const Icon(Icons.menu),
+                  icon: const Icon(
+                    Icons.menu,
+                    color: Colors.black,
+                  ),
                   onSelected: (item) => Methods.onSetting(context, item),
                   itemBuilder: (context) => [
                         const PopupMenuItem<int>(
@@ -62,15 +70,21 @@ class _ContactPageState extends State<ContactPage> {
     if (_contacts == null) return Center(child: CircularProgressIndicator());
 
     return ListView.builder(
-        itemCount: _contacts!.length,
-        itemBuilder: (context, i) => ListTile(
-              title: Text(_contacts![i].displayName),
-              onTap: () async {
-                final fullContact =
-                    await FlutterContacts.getContact(_contacts![i].id);
-                await Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => ContactList(fullContact!)));
-              },
-            ));
+      padding: const EdgeInsets.all(30),
+      itemCount: _contacts!.length,
+      scrollDirection: Axis.vertical,
+      itemBuilder: (context, i) => ListTile(
+        title: Text(
+          _contacts![i].displayName + '\n_____________________________',
+          style: const TextStyle(color: Colors.cyan, fontSize: 20),
+        ),
+        onTap: () async {
+          final fullContact =
+              await FlutterContacts.getContact(_contacts![i].id);
+          await Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => ContactList(fullContact!)));
+        },
+      ),
+    );
   }
 }

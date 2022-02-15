@@ -14,14 +14,25 @@ class ContactList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+      backgroundColor: Colors.grey[850],
       appBar: AppBar(title: Text(contact.displayName)),
       body: Column(children: [
-        Text('First Name: ${contact.name.first}'),
-        Text('Last Name: ${contact.name.last}'),
         Text(
-            'Phone Number: ${contact.phones.isNotEmpty ? contact.phones.first.number : '(none)'}'),
+          'First Name: ${contact.name.first}',
+          style: text.contactText,
+        ),
         Text(
-            'Email Address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}'),
+          'Last Name: ${contact.name.last}',
+          style: text.contactText,
+        ),
+        Text(
+          'Phone Number: ${contact.phones.isNotEmpty ? contact.phones.first.number : '(none)'}',
+          style: text.contactText,
+        ),
+        Text(
+          'Email Address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}',
+          style: text.contactText,
+        ),
         ElevatedButton(
           onPressed: () async {
             database

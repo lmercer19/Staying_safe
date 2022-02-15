@@ -24,7 +24,13 @@ class Styles {
       padding: const EdgeInsets.all(10),
       textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
 
-  static final ButtonStyle sosTopButton = ElevatedButton.styleFrom(
+  static final ButtonStyle sosTopEmergency = ElevatedButton.styleFrom(
+      minimumSize: const Size(90, 90),
+      primary: Colors.red,
+      padding: const EdgeInsets.all(10),
+      textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+
+  static final ButtonStyle sosTopContact = ElevatedButton.styleFrom(
       minimumSize: const Size(90, 90),
       primary: Colors.blue,
       padding: const EdgeInsets.all(10),
@@ -43,12 +49,18 @@ class Styles {
       textStyle: const TextStyle(fontSize: 5, fontWeight: FontWeight.bold));
 
   static final ButtonStyle SOSButton = ElevatedButton.styleFrom(
-      minimumSize: const Size(300, 300),
+      minimumSize: const Size(370, 370),
       shape:
-          const CircleBorder(side: BorderSide(width: 5, color: Colors.green)),
-      primary: Colors.blue,
-      padding: const EdgeInsets.all(10),
-      textStyle: const TextStyle(fontSize: 50, fontWeight: FontWeight.bold));
+          const CircleBorder(side: BorderSide(width: 0, color: Colors.white)),
+      primary: Colors.green[200],
+      padding: const EdgeInsets.all(0),
+      textStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold));
+}
+
+class text {
+  static const TextStyle logintext = TextStyle(fontSize: 20);
+  static const TextStyle contactText =
+      TextStyle(color: Colors.cyan, fontSize: 25);
 }
 
 class Methods {
