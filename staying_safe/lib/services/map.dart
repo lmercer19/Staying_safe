@@ -29,15 +29,12 @@ class _MapWidgetState extends State<MapWidget> {
   bool _isVisible = false;
   void getCurrentLocation() async {
     LocationPermission permission = await Geolocator.requestPermission();
-
     final geoposition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-
+    latitudedata = '${geoposition.latitude}';
+    longitudedata = '${geoposition.longitude}';
     setState(() {
       permission;
-      latitudedata = '${geoposition.latitude}';
-      longitudedata = '${geoposition.longitude}';
-      latitudedata = '${geoposition.latitude}';
       print(latitudedata);
       print(longitudedata);
       updateDatabaseUserLocation();
@@ -63,8 +60,8 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
   }
 
   Widget build(BuildContext context) {
-    final canterburyCoords = LatLng(
-        37.785834, -122.406417); //update this line to be current location
+    final canterburyCoords = LatLng(double.parse(latitudedata),
+        double.parse(longitudedata)); //update this line to be current location
 
     return MaterialApp(
       title: "TomTom Map",
@@ -150,7 +147,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
           onPressed: () async {
             Position position = await Geolocator.getCurrentPosition(
                 desiredAccuracy: LocationAccuracy.high);
-            //print(position);
+            print(position);
           },
         ),
       ),
