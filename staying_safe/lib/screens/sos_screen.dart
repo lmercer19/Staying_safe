@@ -25,7 +25,7 @@ class _SOSscreenState extends State<SOSscreen> {
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       title: const Text(
         'SOS',
         style: TextStyle(color: Colors.black),
@@ -63,10 +63,10 @@ class _SOSscreenState extends State<SOSscreen> {
         crossAxisAlignment:
             CrossAxisAlignment.center, //Center Column contents horizontally
         children: [
-          const Padding(padding: EdgeInsets.all(10)),
+          //const Padding(padding: EdgeInsets.all(10)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton.icon(
                 icon: const Icon(
@@ -96,9 +96,9 @@ class _SOSscreenState extends State<SOSscreen> {
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.all(40),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.all(10),
+          // ),
           Stack(
               alignment: Alignment.center,
               textDirection: TextDirection.rtl,
@@ -106,6 +106,10 @@ class _SOSscreenState extends State<SOSscreen> {
               clipBehavior: Clip.hardEdge,
               children: <Widget>[
                 CircularCountDownTimer(
+                    textStyle: const TextStyle(
+                        fontSize: 120.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                     width: 370,
                     height: 370,
                     autoStart: false,
@@ -137,13 +141,6 @@ class _SOSscreenState extends State<SOSscreen> {
                 ),
               ]),
 
-          // const Padding(
-          //   padding: EdgeInsets.all(10),
-          // ),
-
-          const Padding(
-            padding: EdgeInsets.all(10),
-          ),
           Visibility(
               visible: _isVisibleExit,
               child: Column(

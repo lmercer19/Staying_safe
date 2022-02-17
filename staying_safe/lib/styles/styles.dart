@@ -52,15 +52,16 @@ class Styles {
       minimumSize: const Size(370, 370),
       shape:
           const CircleBorder(side: BorderSide(width: 0, color: Colors.white)),
-      primary: Colors.green[200],
+      primary: Colors.grey[400],
       padding: const EdgeInsets.all(0),
       textStyle: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold));
 }
 
 class text {
   static const TextStyle logintext = TextStyle(fontSize: 20);
-  static const TextStyle contactText =
-      TextStyle(color: Colors.cyan, fontSize: 25);
+
+  static TextStyle contactText =
+      const TextStyle(color: Colors.white, fontSize: 20);
 }
 
 class Methods {

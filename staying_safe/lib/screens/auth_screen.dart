@@ -37,9 +37,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.grey[300],
         body: Padding(
             padding: const EdgeInsets.all(40),
             child: SizedBox(

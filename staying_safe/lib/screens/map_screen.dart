@@ -17,7 +17,7 @@ class _MapscreenState extends State<Mapscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         title: const Text(
           'Home',
           style: TextStyle(color: Colors.black),

@@ -37,7 +37,7 @@ class _ContactPageState extends State<ContactPage> {
       home: Scaffold(
           backgroundColor: Colors.grey[850],
           appBar: AppBar(
-            backgroundColor: Colors.grey[200],
+            backgroundColor: Colors.grey[300],
             title: const Text(
               'Contacts List',
               style: TextStyle(color: Colors.black),
@@ -66,25 +66,53 @@ class _ContactPageState extends State<ContactPage> {
           body: _body()));
 
   Widget _body() {
-    if (_permissionDenied) return Center(child: Text('Permission denied'));
-    if (_contacts == null) return Center(child: CircularProgressIndicator());
+    if (_permissionDenied) {
+      return const Center(child: Text('Permission denied'));
+    }
+    if (_contacts == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(30),
       itemCount: _contacts!.length,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (context, i) => ListTile(
-        title: Text(
-          _contacts![i].displayName + '\n_____________________________',
-          style: const TextStyle(color: Colors.cyan, fontSize: 20),
-        ),
-        onTap: () async {
-          final fullContact =
-              await FlutterContacts.getContact(_contacts![i].id);
-          await Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => ContactList(fullContact!)));
-        },
-      ),
+      itemBuilder: (context, i) {
+        return Container(
+          decoration: const BoxDecoration(
+            border: Border(
+              bottom: BorderSide(color: Colors.black, width: 2),
+            ),
+          ),
+          child: ListTile(
+            title: Text(_contacts![i].displayName,
+                style: const TextStyle(color: Colors.white, fontSize: 20)),
+            onTap: () async {
+              final fullContact =
+                  await FlutterContacts.getContact(_contacts![i].id);
+              await Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => ContactList(fullContact!)));
+            },
+          ),
+        );
+      },
     );
   }
+
+  //   return ListView.builder(
+  //     padding: const EdgeInsets.all(25),
+  //     itemCount: _contacts!.length,
+  //     scrollDirection: Axis.vertical,
+  //     itemBuilder: (context, i) => ListTile(
+  //       title: Text(
+  //         _contacts![i].displayName + '' + '',
+  //         style: const TextStyle(color: Colors.white, fontSize: 20),
+  //       ),
+  //       onTap: () async {
+  //         final fullContact =
+  //             await FlutterContacts.getContact(_contacts![i].id);
+  //         await Navigator.of(context).push(
+  //             MaterialPageRoute(builder: (_) => ContactList(fullContact!)));
+  //       },
+  //     ),
+  //   );
+  // }
 }
