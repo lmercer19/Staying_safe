@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:staying_safe/screens/copyrights_page.dart';
 import "package:staying_safe/services/map.dart";
 import 'package:staying_safe/screens/auth_screen.dart'; //auth_screen imported to get UID.
 
