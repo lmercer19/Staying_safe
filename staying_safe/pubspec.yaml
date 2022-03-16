@@ -43,8 +43,10 @@ dependencies:
   flutter_countdown_timer: ^4.1.0
   circular_countdown_timer: ^0.2.0
   firebase_database: ^9.0.6
-  geocoding: ^1.0.5
-  geolocator: ^6.1.1
+  geocoding: ^2.0.2
+  geolocator: ^8.1.1
+  permission_handler: ^8.3.0
+
   
 dev_dependencies:
   flutter_test:
