@@ -7,8 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:staying_safe/screens/copyrights_page.dart';
-import "package:staying_safe/services/map.dart";
 import 'package:staying_safe/screens/auth_screen.dart'; //auth_screen imported to get UID.
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
@@ -84,7 +82,8 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                     Marker(
                       width: 80.0,
                       height: 80.0,
-                      point: LatLng(0.0, 0.0),
+                      point: LatLng(double.parse(latitudedata),
+        double.parse(longitudedata)),
                       builder: (BuildContext context) => const Icon(
                           Icons.location_on,
                           size: 60.0,
@@ -147,12 +146,9 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.copyright),
           onPressed: () async {
-            http.Response response = await getCopyrightsJSONResponse();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CopyrightsPage(
-                        copyrightsText: parseCopyrightsResponse(response))));
+            Position position = await Geolocator.getCurrentPosition(
+                desiredAccuracy: LocationAccuracy.high);
+            print(position);
           },
         ),
       ),
