@@ -4,6 +4,7 @@ import "dart:convert" as convert;
 import "package:flutter_map/flutter_map.dart";
 import "package:latlong2/latlong.dart";
 import 'package:staying_safe/screens/copyrights_page.dart';
+import "package:staying_safe/services/map.dart";
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
 
