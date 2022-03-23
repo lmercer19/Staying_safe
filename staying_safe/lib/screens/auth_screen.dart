@@ -39,6 +39,7 @@ class _HomeState extends State<Home> {
     final screenwidth = MediaQuery.of(context).size.width;
     return Scaffold(
         backgroundColor: Colors.grey[300],
+        appBar: appbar,
         body: Padding(
             padding: const EdgeInsets.all(40),
             child: SizedBox(
