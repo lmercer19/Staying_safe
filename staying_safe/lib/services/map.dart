@@ -105,6 +105,7 @@ class _MapWidgetState extends State<MapWidget> {
         )),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.copyright),
+          backgroundColor: Colors.green[600],
           onPressed: () async {
             http.Response response = await getCopyrightsJSONResponse();
             Navigator.push(

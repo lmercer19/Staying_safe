@@ -15,25 +15,6 @@ class SOSscreen extends StatefulWidget {
 }
 
 //for settings and logout buttons.
-void onSelected(BuildContext context, int item) {
-  switch (item) {
-    case 0:
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const setting()),
-      );
-      break;
-    case 1:
-      () async {
-        await FirebaseAuth.instance.signOut();
-      };
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AuthApp()),
-      );
-      break;
-  }
-}
 
 bool _isVisibleExit = false;
 bool _isVisibleTimer = true;
@@ -43,14 +24,21 @@ class _SOSscreenState extends State<SOSscreen> {
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
-      backgroundColor: Colors.blue,
-      title: const Text('Kent Walksafe'),
+      backgroundColor: Colors.grey[300],
+      title: const Text(
+        'SOS',
+        style: TextStyle(color: Colors.black),
+      ),
+
       automaticallyImplyLeading: false, //remove backbutton
       centerTitle: true,
       actions: [
         PopupMenuButton<int>(
-            icon: const Icon(Icons.menu),
-            onSelected: (item) => onSelected(context, item),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.black,
+            ),
+            onSelected: (item) => Methods.onSetting(context, item),
             itemBuilder: (context) => [
                   const PopupMenuItem<int>(
                     value: 0,
@@ -66,7 +54,7 @@ class _SOSscreenState extends State<SOSscreen> {
 
     return MaterialApp(
         home: Scaffold(
-      backgroundColor: Colors.grey,
+      backgroundColor: Colors.grey[850],
       appBar: appbar,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -74,39 +62,43 @@ class _SOSscreenState extends State<SOSscreen> {
         crossAxisAlignment:
             CrossAxisAlignment.center, //Center Column contents horizontally
         children: [
-          const Padding(padding: EdgeInsets.all(10)),
+          //const Padding(padding: EdgeInsets.all(10)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton.icon(
                 icon: const Icon(
-                  Icons.contacts,
+                  Icons.local_phone,
                   color: Colors.black,
                   size: 30.0,
                 ),
-                label: const Text('EMERGENCY'),
+                label: const Text(
+                  'EMERGENCY',
+                  style: TextStyle(color: Colors.black),
+                ),
                 onPressed: () {},
-                style: Styles.sosTopButton,
+                style: Styles.sosTopEmergency,
               ),
               const Padding(
                 padding: EdgeInsets.all(20),
               ),
               ElevatedButton.icon(
                 icon: const Icon(
-                  Icons.contacts,
+                  Icons.local_phone,
                   color: Colors.black,
                   size: 30.0,
                 ),
-                style: Styles.sosTopButton,
-                label: const Text('CONTACTS'),
+                style: Styles.sosTopContact,
+                label: const Text('CONTACTS',
+                    style: TextStyle(color: Colors.black)),
                 onPressed: () {},
               ),
             ],
           ),
-          const Padding(
-            padding: EdgeInsets.all(40),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.all(10),
+          // ),
           Stack(
               alignment: Alignment.center,
               textDirection: TextDirection.rtl,
@@ -114,8 +106,12 @@ class _SOSscreenState extends State<SOSscreen> {
               clipBehavior: Clip.hardEdge,
               children: <Widget>[
                 CircularCountDownTimer(
-                    width: 300,
-                    height: 300,
+                    textStyle: const TextStyle(
+                        fontSize: 120.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                    width: 370,
+                    height: 370,
                     autoStart: false,
                     controller: _controller,
                     duration: 10,
@@ -135,20 +131,16 @@ class _SOSscreenState extends State<SOSscreen> {
                             _controller.restart();
                           });
                         },
-                        child: const Text('SOS'),
+                        child: const Text(
+                          'I FEEL UNSAFE',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
                     )
                   ],
                 ),
               ]),
 
-          // const Padding(
-          //   padding: EdgeInsets.all(10),
-          // ),
-
-          const Padding(
-            padding: EdgeInsets.all(10),
-          ),
           Visibility(
               visible: _isVisibleExit,
               child: Column(

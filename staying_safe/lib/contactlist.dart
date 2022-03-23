@@ -4,6 +4,7 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:staying_safe/styles/styles.dart';
 
 class ContactList extends StatelessWidget {
   final Contact contact;
@@ -13,14 +14,28 @@ class ContactList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-      appBar: AppBar(title: Text(contact.displayName)),
+      backgroundColor: Colors.grey[850],
+      appBar: AppBar(
+        title: Text(
+          contact.displayName,
+          style: const TextStyle(color: Colors.black),
+        ),
+        backgroundColor: Colors.grey[300],
+      ),
       body: Column(children: [
-        Text('First Name: ${contact.name.first}'),
-        Text('Last Name: ${contact.name.last}'),
         Text(
-            'Phone Number: ${contact.phones.isNotEmpty ? contact.phones.first.number : '(none)'}'),
-        Text(
-            'Email Address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}'),
+          '\n'
+          ' First Name: ${contact.name.first}'
+          '\n\n'
+          ' Last Name: ${contact.name.last}'
+          '\n\n'
+          ' Phone Number: ${contact.phones.isNotEmpty ? contact.phones.first.number : '(none)'}'
+          '\n\n'
+          ' Email Address: ${contact.emails.isNotEmpty ? contact.emails.first.address : '(none)'}'
+          '\n',
+          textAlign: TextAlign.left,
+          style: text.contactText,
+        ),
         ElevatedButton(
           onPressed: () async {
             database
