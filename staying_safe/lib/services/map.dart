@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:staying_safe/screens/auth_screen.dart'; //auth_screen imported to get UID.
+import 'package:staying_safe/screens/auth_screen.dart';
 import 'package:staying_safe/screens/copyrights_page.dart';
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
@@ -62,7 +62,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
 
   Widget build(BuildContext context) {
     final canterburyCoords = LatLng(double.parse(latitudedata),
-        double.parse(longitudedata)); //update this line to be current location
+        double.parse(longitudedata));
 
     return MaterialApp(
       title: "TomTom Map",
@@ -215,14 +215,10 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                     print('$value');
                     await getAddresses(value, canterburyCoords.latitude,
                         canterburyCoords.longitude);
-                    print("after getAddresses");
                     Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
-                        print("inside set state");
                         _isVisible = !_isVisible;
-                        print("after visible");
                       });
-                      print("after state set");
                     });
                   },
                 )),
@@ -254,6 +250,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
         )),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.copyright),
+          backgroundColor: Colors.green[600],
           onPressed: () async {
             http.Response response = await getCopyrightsJSONResponse();
             Navigator.push(
@@ -277,6 +274,8 @@ Future<http.Response> getCopyrightsJSONResponse() async {
   return response;
 }
 
+/* Method parses the copyrights response if 200 status is recieved, 
+otherwise returns error message */
 String parseCopyrightsResponse(http.Response response) {
   if (response.statusCode == 200) {
     StringBuffer stringBuffer = StringBuffer();
@@ -288,6 +287,8 @@ String parseCopyrightsResponse(http.Response response) {
   return "Can't get copyrights";
 }
 
+/* Method parses the regional json response and formats the 
+string */
 void parseRegionsCopyrights(jsonResponse, StringBuffer sb) {
   List<dynamic> copyrightsRegions = jsonResponse["regions"];
   copyrightsRegions.forEach((element) {
@@ -300,6 +301,8 @@ void parseRegionsCopyrights(jsonResponse, StringBuffer sb) {
   });
 }
 
+/* Method parses the general json response and formats the 
+string */
 void parseGeneralCopyrights(jsonResponse, StringBuffer sb) {
   List<dynamic> generalCopyrights = jsonResponse["generalCopyrights"];
   generalCopyrights.forEach((element) {
@@ -330,13 +333,5 @@ getAddresses(value, lat, lon) async {
     var fullAddress = address['freeformAddress'];
 
     addresses.add(fullAddress);
-    //addressesLatLong.add(latLong);
-    // var marker = Marker(
-    //     point: LatLng(position['lat'], position['lon']),
-    //     width: 50.0,
-    //     height: 50.0,
-    //     builder: (BuildContext context) =>
-    //         const Icon(Icons.location_on, size: 40.0, color: Colors.blue));
-    // markers.add(marker);
   }
 }
