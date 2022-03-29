@@ -3,9 +3,15 @@ import "package:http/http.dart" as http;
 import "dart:convert" as convert;
 import "package:flutter_map/flutter_map.dart";
 import "package:latlong2/latlong.dart";
+import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:staying_safe/screens/auth_screen.dart'; //auth_screen imported to get UID.
 import 'package:staying_safe/screens/copyrights_page.dart';
 
 final String apiKey = "RZrPN8h5C4BWs2TaHhBm8akd925h2n0L";
+final database = FirebaseDatabase.instance.ref("users/" + user!.uid + "/map/");
 
 final List<String> addresses = List.empty(growable: true);
 //final Map<String, String> currentLocation = {'key': '$apiKey'};
@@ -17,12 +23,46 @@ class MapWidget extends StatefulWidget {
   _MapWidgetState createState() => _MapWidgetState();
 }
 
+String latitudedata = '';
+String longitudedata = '';
+
 class _MapWidgetState extends State<MapWidget> {
   bool _isVisible = false;
+  void getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    final geoposition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    latitudedata = '${geoposition.latitude}';
+    longitudedata = '${geoposition.longitude}';
+    setState(() {
+      permission;
+      print(latitudedata);
+      print(longitudedata);
+      updateDatabaseUserLocation();
+    });
+  }
+
+/*
+updateDatabaseUserLocation() sends user's lat long coords to database. 
+*/
+  void updateDatabaseUserLocation() {
+    try {
+      database.update({"Lat: ": latitudedata, "Long: ": longitudedata}).then(
+          (_) => print("database updated"));
+    } catch (e) {
+      print("You got an error! $e");
+    }
+  }
+
   @override
+  void initState() {
+    super.initState();
+    getCurrentLocation();
+  }
+
   Widget build(BuildContext context) {
-    final canterburyCoords =
-        LatLng(51.27597, 1.07561); //update this line to be current location
+    final canterburyCoords = LatLng(double.parse(latitudedata),
+        double.parse(longitudedata)); //update this line to be current location
 
     return MaterialApp(
       title: "TomTom Map",
@@ -43,7 +83,8 @@ class _MapWidgetState extends State<MapWidget> {
                     Marker(
                       width: 80.0,
                       height: 80.0,
-                      point: LatLng(51.27597, 1.07561),
+                      point: LatLng(double.parse(latitudedata),
+        double.parse(longitudedata)),
                       builder: (BuildContext context) => const Icon(
                           Icons.location_on,
                           size: 60.0,
