@@ -168,41 +168,39 @@ CountDownController _controller = CountDownController();
                children: [
                  Visibility(
               visible: (_isVisibleEmergency),
+              
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextField (  
-  decoration: InputDecoration(  
-    border: InputBorder.none,  
-    labelText: 'Emergency Services have been contacted',  
-    hintText: 'Enter Your Name'  
-  ),  
+                  
+                  TextField (    style:TextStyle(color: Colors.black, fontSize: 18),
+                decoration: InputDecoration(  
+                  fillColor: Colors.white, filled: 
+                  true,
+                  border: InputBorder.none,  
+                  labelText: 'The emergency services have been contacted',  
+                    
+                ),   
 ),
+
                 ],
               )),
                  Visibility(
               visible: (_isVisibleContact),
               child: Column(
                 children: [
-                  TextField (  
-  decoration: InputDecoration(  
-    border: InputBorder.none,  
-    labelText: 'Your Conact has been notified of your distress',  
-    hintText: 'Enter Your Name'  
-  ),  
-),
+                  TextField (  style:TextStyle(color: Colors.black, fontSize: 18),
+                decoration: InputDecoration(  
+                  fillColor: Colors.white, filled: 
+                  true,
+                  border: InputBorder.none,  
+                  labelText: 'Your Conact has been notified of your distress',  
+                    
+                ),  
+                
+              ),
                 ],
               ))
-
-
-                         
-
-
                           ]
-
                   )],
-              ),
-        ],
-      ),
-    ));
-  }
-}
+    ),],),));}}
