@@ -36,17 +36,18 @@ class ContactList extends StatelessWidget {
           textAlign: TextAlign.left,
           style: text.contactText,
         ),
-        ElevatedButton(
-          onPressed: () async {
-            database
-                .update({
-                  "p_key": contact.id,
-                })
-                .then((_) => print("database1 updated"))
-                .catchError((error) => print("Error occurred + $error"));
-            database1.update({"name": contact.displayName});
-          },
-          child: const Text("database"),
-        )
+        // used to test to see if the data was published to the database.
+        // ElevatedButton(
+        //   onPressed: () async {
+        //     database
+        //         .update({
+        //           "p_key": contact.id,
+        //         })
+        //         .then((_) => print("database1 updated"))
+        //         .catchError((error) => print("Error occurred + $error"));
+        //     database1.update({"name": contact.displayName});
+        //   },
+        //   child: const Text("database"),
+        // )
       ]));
 }
