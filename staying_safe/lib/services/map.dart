@@ -61,8 +61,9 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
   }
 
   Widget build(BuildContext context) {
-    final canterburyCoords = LatLng(double.parse(latitudedata),
+    final userCords = LatLng(double.parse(latitudedata),
         double.parse(longitudedata));
+        
 
     return MaterialApp(
       title: "TomTom Map",
@@ -71,7 +72,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
             child: Stack(
           children: <Widget>[
             FlutterMap(
-              options: MapOptions(center: canterburyCoords, zoom: 13.0),
+              options: MapOptions(center: userCords, zoom: 13.0),
               layers: [
                 TileLayerOptions(
                   urlTemplate: "https://api.tomtom.com/map/1/tile/basic/main/"
@@ -105,8 +106,8 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                 child: TextField(
                   onSubmitted: (value) async {
                     print('$value');
-                    await getAddresses(value, canterburyCoords.latitude,
-                        canterburyCoords.longitude);
+                    await getAddresses(value, userCords.latitude,
+                        userCords.longitude);
                     Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _isVisible = !_isVisible;
