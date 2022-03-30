@@ -107,10 +107,11 @@ class _HomeState extends State<Home> {
                                                   password:
                                                       passwordcontroller.text);
                                           isLoggedIn = true;
-                                          setState(() {});
-                                          error.clear();
                                           emailcontroller.clear();
                                           passwordcontroller.clear();
+                                          setState(() {});
+                                          error.clear();
+                                         
                                         } on FirebaseAuthException catch (e) {
                                           if (e.code == 'user-not-found') {
                                             error.write(
