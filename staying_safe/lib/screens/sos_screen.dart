@@ -3,7 +3,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:staying_safe/screens/settings_screen.dart';
 import 'auth_screen.dart';
 import 'package:staying_safe/styles/styles.dart';
 
@@ -42,10 +41,6 @@ class _SOSscreenState extends State<SOSscreen> {
             itemBuilder: (context) => [
                   const PopupMenuItem<int>(
                     value: 0,
-                    child: Text('Settings'),
-                  ),
-                  const PopupMenuItem<int>(
-                    value: 1,
                     child: Text('Log Out'),
                   ),
                 ])

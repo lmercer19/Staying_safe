@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:staying_safe/screens/settings_screen.dart';
 import "package:flutter/material.dart";
 import 'package:staying_safe/screens/auth_screen.dart';
 import "package:staying_safe/services/map.dart";
@@ -34,10 +33,6 @@ class _MapscreenState extends State<Mapscreen> {
               itemBuilder: (context) => [
                     const PopupMenuItem<int>(
                       value: 0,
-                      child: Text('Settings'),
-                    ),
-                    const PopupMenuItem<int>(
-                      value: 1,
                       child: Text('Log Out'),
                     ),
                   ])

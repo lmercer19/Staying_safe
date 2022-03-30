@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:staying_safe/screens/auth_screen.dart';
 import 'package:staying_safe/screens/home_screen.dart';
-import 'package:staying_safe/screens/settings_screen.dart';
 import 'package:staying_safe/screens/sos_screen.dart';
 import 'package:staying_safe/screens/auth_screen.dart';
 //import 'package:staying_safe/styles/util.dart';
@@ -68,12 +67,6 @@ class Methods {
   static onSetting(BuildContext context, int item) {
     switch (item) {
       case 0:
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const setting()),
-        );
-        break;
-      case 1:
         () async {
           await FirebaseAuth.instance.signOut();
         };

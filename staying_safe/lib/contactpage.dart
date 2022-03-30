@@ -54,10 +54,6 @@ class _ContactPageState extends State<ContactPage> {
                   itemBuilder: (context) => [
                         const PopupMenuItem<int>(
                           value: 0,
-                          child: Text('Settings'),
-                        ),
-                        const PopupMenuItem<int>(
-                          value: 1,
                           child: Text('Log Out'),
                         ),
                       ])
