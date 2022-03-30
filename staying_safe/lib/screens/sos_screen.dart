@@ -17,6 +17,8 @@ class SOSscreen extends StatefulWidget {
 
 bool _isVisibleExit = false;
 bool _isVisibleTimer = true;
+bool _isVisibleContact = false;
+bool _isVisibleEmergency = false;
 CountDownController _controller = CountDownController();
 
 class _SOSscreenState extends State<SOSscreen> {
@@ -153,7 +155,45 @@ class _SOSscreenState extends State<SOSscreen> {
                     child: const Text('EXIT SOS MODE'),
                   )
                 ],
+              )),Column(
+                children:[Stack(
+              alignment: Alignment.center,
+               children: [
+                 Visibility(
+              visible: (_isVisibleEmergency),
+              child: Column(
+                children: [
+                  TextField (  
+  decoration: InputDecoration(  
+    border: InputBorder.none,  
+    labelText: 'Emergency Services have been contacted',  
+    hintText: 'Enter Your Name'  
+  ),  
+),
+                ],
+              )),
+                 Visibility(
+              visible: (_isVisibleContact),
+              child: Column(
+                children: [
+                  TextField (  
+  decoration: InputDecoration(  
+    border: InputBorder.none,  
+    labelText: 'Your Conact has been notified of your distress',  
+    hintText: 'Enter Your Name'  
+  ),  
+),
+                ],
               ))
+
+
+                         
+
+
+                          ]
+
+                  )],
+              ),
         ],
       ),
     ));
