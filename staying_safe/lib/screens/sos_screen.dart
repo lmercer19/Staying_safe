@@ -20,8 +20,7 @@ class _SOSscreenState extends State<SOSscreen> {
 //for settings and logout buttons.
 bool _isVisibleExit = false;
 bool _isVisibleTimer = true;
-bool _isVisibleContact = false;
-bool _isVisibleEmergency = false;
+
 CountDownController _controller = CountDownController();
   @override
   Widget build(BuildContext context) {
@@ -76,8 +75,11 @@ CountDownController _controller = CountDownController();
                   style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {setState(() {
-                    _isVisibleEmergency = true;
-                _isVisibleContact= false;
+                    const snackBar = SnackBar(
+                                    content: Text('Emergency Services have been requested'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                   });},
                 style: Styles.sosTopEmergency,
               ),
@@ -94,8 +96,11 @@ CountDownController _controller = CountDownController();
                 label: const Text('CONTACTS',
                     style: TextStyle(color: Colors.black)),
                 onPressed: () {setState(() {
-                    _isVisibleEmergency = false;
-                _isVisibleContact= true;
+                    const snackBar = SnackBar(
+                                    content: Text('Contact has been notified of your distress'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
                   });},
               ),
             ],
@@ -162,45 +167,4 @@ CountDownController _controller = CountDownController();
                     child: const Text('EXIT SOS MODE'),
                   )
                 ],
-              )),Column(
-                children:[Stack(
-              alignment: Alignment.center,
-               children: [
-                 Visibility(
-              visible: (_isVisibleEmergency),
-              
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  
-                  TextField (    style:TextStyle(color: Colors.black, fontSize: 18),
-                decoration: InputDecoration(  
-                  fillColor: Colors.white, filled: 
-                  true,
-                  border: InputBorder.none,  
-                  labelText: 'The emergency services have been contacted',  
-                    
-                ),   
-),
-
-                ],
-              )),
-                 Visibility(
-              visible: (_isVisibleContact),
-              child: Column(
-                children: [
-                  TextField (  style:TextStyle(color: Colors.black, fontSize: 18),
-                decoration: InputDecoration(  
-                  fillColor: Colors.white, filled: 
-                  true,
-                  border: InputBorder.none,  
-                  labelText: 'Your Conact has been notified of your distress',  
-                    
-                ),  
-                
-              ),
-                ],
-              ))
-                          ]
-                  )],
-    ),],),));}}
+              )),],),));}}

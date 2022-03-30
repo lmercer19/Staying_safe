@@ -200,7 +200,7 @@ class _HomeState extends State<Home> {
                                     fontSize: 20,
                                   )),
                               onPressed: () async {
-                                if (emailcontroller.text == '') {
+                                if (emailcontroller.text == null) {
                                   const snackBar = SnackBar(
                                     content: Text('please enter a valid email'),
                                   );
@@ -210,6 +210,12 @@ class _HomeState extends State<Home> {
                                   await FirebaseAuth.instance
                                       .sendPasswordResetEmail(
                                           email: emailcontroller.text);
+                                          const snackBar = SnackBar(
+                                            content:Text('Reset email sent out')
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+
                                 }
                               },
                               child: const Text('Forgot password?')),
