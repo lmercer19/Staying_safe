@@ -23,8 +23,8 @@ class MapWidget extends StatefulWidget {
   _MapWidgetState createState() => _MapWidgetState();
 }
 
-String latitudedata = '';
-String longitudedata = '';
+double latitudedata =0.0;
+double longitudedata=0.0; 
 
 class _MapWidgetState extends State<MapWidget> {
   bool _isVisible = false;
@@ -32,8 +32,8 @@ class _MapWidgetState extends State<MapWidget> {
     LocationPermission permission = await Geolocator.requestPermission();
     final geoposition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    latitudedata = '${geoposition.latitude}';
-    longitudedata = '${geoposition.longitude}';
+    latitudedata = double.parse('${geoposition.latitude}');
+    longitudedata = double.parse('${geoposition.longitude}');
     setState(() {
       permission;
       print(latitudedata);
@@ -61,9 +61,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
   }
 
   Widget build(BuildContext context) {
-    final userCords = LatLng(double.parse(latitudedata),
-        double.parse(longitudedata));
-        
+    final userLocation = LatLng(latitudedata,longitudedata);
 
     return MaterialApp(
       title: "TomTom Map",
@@ -72,7 +70,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
             child: Stack(
           children: <Widget>[
             FlutterMap(
-              options: MapOptions(center: userCords, zoom: 13.0),
+              options: MapOptions(center: userLocation, zoom: 13.0),
               layers: [
                 TileLayerOptions(
                   urlTemplate: "https://api.tomtom.com/map/1/tile/basic/main/"
@@ -84,8 +82,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                     Marker(
                       width: 80.0,
                       height: 80.0,
-                      point: LatLng(double.parse(latitudedata),
-        double.parse(longitudedata)),
+                      point: LatLng(latitudedata,longitudedata),
                       builder: (BuildContext context) => const Icon(
                           Icons.location_on,
                           size: 60.0,
@@ -106,8 +103,8 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                 child: TextField(
                   onSubmitted: (value) async {
                     print('$value');
-                    await getAddresses(value, userCords.latitude,
-                        userCords.longitude);
+                    await getAddresses(value, userLocation.latitude,
+                        userLocation.longitude);
                     Future.delayed(const Duration(milliseconds: 1000), () {
                       setState(() {
                         _isVisible = !_isVisible;
