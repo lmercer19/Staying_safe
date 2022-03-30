@@ -101,7 +101,10 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                 padding: const EdgeInsets.all(30),
                 alignment: Alignment.topLeft,
                 child: TextField(
-                  decoration: InputDecoration(fillColor: Colors.white, filled: true),
+                  decoration: InputDecoration(fillColor: Colors.white, filled: true,
+                  hintText: "search",
+                              prefixIcon: const Icon(Icons.search),
+                  ),
                   style: TextStyle(fontSize: 20),  
                   onSubmitted: (value) async {
                     print('$value');
