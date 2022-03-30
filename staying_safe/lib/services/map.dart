@@ -86,7 +86,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                       builder: (BuildContext context) => const Icon(
                           Icons.location_on,
                           size: 60.0,
-                          color: Colors.black),
+                          color: Colors.red),
                     ),
                     Marker(
                       width: 80.0,
