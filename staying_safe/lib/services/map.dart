@@ -84,119 +84,11 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                       width: 80.0,
                       height: 80.0,
                       point: LatLng(double.parse(latitudedata),
-                          double.parse(longitudedata)),
+        double.parse(longitudedata)),
                       builder: (BuildContext context) => const Icon(
                           Icons.location_on,
                           size: 60.0,
-                          color: Colors.blue),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.27754650291323, 1.0848858189432236),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.person_pin_circle_rounded,
-                          size: 50.0,
                           color: Colors.black),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.28016092301291, 1.0659815136477175),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.person_pin_circle_rounded,
-                          size: 50.0,
-                          color: Colors.black),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.29549841995869, 1.0743149527322153),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.person_pin_circle_rounded,
-                          size: 50.0,
-                          color: Colors.black),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.297837782169836, 1.0576745781358783),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.person_pin_circle_rounded,
-                          size: 50.0,
-                          color: Colors.black),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.29609247785077, 1.0872380560292436),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.add_location_outlined,
-                          size: 40.0,
-                          color: Colors.red),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.29614366631812, 1.0825111089619404),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.add_location_outlined,
-                          size: 40.0,
-                          color: Colors.red),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.28937054045498, 1.0989675972636284),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.add_location_outlined,
-                          size: 40.0,
-                          color: Colors.red),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.27344357456131, 1.0717042456296024),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.pan_tool_rounded,
-                          size: 40.0,
-                          color: Colors.orange),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.28329803063732, 1.0580725698125895),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.remove_red_eye,
-                          size: 40.0,
-                          color: Colors.blue),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.29865872041189, 1.0669460190449243),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.pan_tool_rounded,
-                          size: 40.0,
-                          color: Colors.orange),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.28671642968572, 1.0949166745800565),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.remove_red_eye,
-                          size: 40.0,
-                          color: Colors.blue),
-                    ),
-                    Marker(
-                      width: 80.0,
-                      height: 80.0,
-                      point: LatLng(51.293512255544755, 1.0933734656854435),
-                      builder: (BuildContext context) => const Icon(
-                          Icons.remove_red_eye,
-                          size: 40.0,
-                          color: Colors.blue),
                     ),
                   ],
                 ),
@@ -225,16 +117,21 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
             Visibility(
               visible: _isVisible,
               child: ListView.builder(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(top: 90.0),
                 itemCount: addresses.length,
                 itemBuilder: (BuildContext context, int index) {
                   print("before address container output");
-                  return TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(16.0),
-                      primary: Colors.black,
-                      textStyle: const TextStyle(fontSize: 20),
+                  
+                   return RaisedButton(
+                    color: Colors.grey,
+                    textColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide(color: Colors.black, width: 2),
+                    
+                  
+                 
                     ),
+                    
                     onPressed: () {
                       setState(() {
                         _isVisible = !_isVisible;
@@ -243,6 +140,7 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                     },
                     child: Center(child: Text(addresses[index])),
                   );
+                  
                 },
               ),
             ),
