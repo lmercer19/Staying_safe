@@ -23,8 +23,8 @@ class MapWidget extends StatefulWidget {
   _MapWidgetState createState() => _MapWidgetState();
 }
 
-double latitudedata =0.0;
-double longitudedata=0.0; 
+double latitudedata =51.279;
+double longitudedata=1.08; 
 
 class _MapWidgetState extends State<MapWidget> {
   bool _isVisible = false;
@@ -101,6 +101,8 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
                 padding: const EdgeInsets.all(30),
                 alignment: Alignment.topLeft,
                 child: TextField(
+                  decoration: InputDecoration(fillColor: Colors.white, filled: true),
+                  style: TextStyle(fontSize: 20),  
                   onSubmitted: (value) async {
                     print('$value');
                     await getAddresses(value, userLocation.latitude,
@@ -115,18 +117,21 @@ updateDatabaseUserLocation() sends user's lat long coords to database.
             Visibility(
               visible: _isVisible,
               child: ListView.builder(
+          
                 padding: const EdgeInsets.only(top: 90.0),
                 itemCount: addresses.length,
                 itemBuilder: (BuildContext context, int index) {
                   print("before address container output");
                   
-                   return RaisedButton(
-                    color: Colors.grey,
-                    textColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black, width: 2),
-                    
-                  
+                  return TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(16.0),
+                      primary: Colors.black,
+                      textStyle: const TextStyle(fontSize: 17.5),
+                      backgroundColor: Colors.grey,
+                      shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.black, width: 1),
+                    ),        
                  
                     ),
                     
