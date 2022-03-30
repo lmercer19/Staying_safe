@@ -13,15 +13,16 @@ class SOSscreen extends StatefulWidget {
   _SOSscreenState createState() => _SOSscreenState();
 }
 
-//for settings and logout buttons.
 
+
+
+class _SOSscreenState extends State<SOSscreen> {
+//for settings and logout buttons.
 bool _isVisibleExit = false;
 bool _isVisibleTimer = true;
 bool _isVisibleContact = false;
 bool _isVisibleEmergency = false;
 CountDownController _controller = CountDownController();
-
-class _SOSscreenState extends State<SOSscreen> {
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
@@ -74,7 +75,10 @@ class _SOSscreenState extends State<SOSscreen> {
                   'EMERGENCY',
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {},
+                onPressed: () {setState(() {
+                    _isVisibleEmergency = true;
+                _isVisibleContact= false;
+                  });},
                 style: Styles.sosTopEmergency,
               ),
               const Padding(
@@ -89,7 +93,10 @@ class _SOSscreenState extends State<SOSscreen> {
                 style: Styles.sosTopContact,
                 label: const Text('CONTACTS',
                     style: TextStyle(color: Colors.black)),
-                onPressed: () {},
+                onPressed: () {setState(() {
+                    _isVisibleEmergency = false;
+                _isVisibleContact= true;
+                  });},
               ),
             ],
           ),
