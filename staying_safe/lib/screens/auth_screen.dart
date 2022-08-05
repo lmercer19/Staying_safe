@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:staying_safe/screens/home_screen.dart';
 import 'package:staying_safe/styles/styles.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 final emailcontroller = TextEditingController();
 final passwordcontroller = TextEditingController();
 bool ispassword = true;
 bool isLoggedIn = false;
 User? user = FirebaseAuth.instance.currentUser;
+final database = FirebaseDatabase.instance.ref("users/");
 final appbar = AppBar(title: const Text('Staying safe'));
 var error = StringBuffer();
 
@@ -37,15 +40,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
-    final appbarheight = appbar.preferredSize.height;
-
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.grey[300],
         appBar: appbar,
         body: Padding(
-            padding: const EdgeInsets.all(60.0),
+            padding: const EdgeInsets.all(40),
             child: SizedBox(
-                height: (screenHeight - appbarheight),
+                height: screenHeight,
                 width: screenwidth,
                 child: Builder(builder: (BuildContext context) {
                   return Column(
@@ -54,6 +55,7 @@ class _HomeState extends State<Home> {
                         (Image.asset("images/Logo.png")),
                         TextFormField(
                           key: const ValueKey("Email"),
+                          style: Styles.logintext,
                           textAlign: TextAlign.left,
                           decoration: const InputDecoration(
                             hintText: "Email",
@@ -64,6 +66,7 @@ class _HomeState extends State<Home> {
                         TextField(
                           key: const ValueKey("password"),
                           textAlign: TextAlign.left,
+                          style: Styles.logintext,
                           obscureText: ispassword,
                           decoration: InputDecoration(
                               hintText: "Password",
@@ -76,57 +79,76 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 20,
                         ),
+                        const Padding(
+                          padding: EdgeInsets.all(12.0),
+                        ),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: ElevatedButton(
-                                    style: Styles.loginStyle,
-                                    //sign in button
-                                    child: const Text('Sign In '),
-                                    onPressed: () async {
-                                      error.clear();
-                                      try {
-                                        await FirebaseAuth.instance
-                                            .signInWithEmailAndPassword(
-                                                email: emailcontroller.text,
-                                                password:
-                                                    passwordcontroller.text);
-                                        isLoggedIn = true;
-                                        setState(() {});
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.black,
+                                          fixedSize:
+                                              Size(screenwidth * 0.33, 50),
+                                          textStyle: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                          )),
+                                      //sign in button
+                                      child: const Text('Sign In '),
+                                      onPressed: () async {
                                         error.clear();
-                                      } on FirebaseAuthException catch (e) {
-                                        if (e.code == 'user-not-found') {
-                                          error.write(
-                                              'No user found for that email.');
-                                        } else if (e.code == 'wrong-password') {
-                                          error.write(
-                                              'Wrong password provided for that user');
+                                        try {
+                                          await FirebaseAuth.instance
+                                              .signInWithEmailAndPassword(
+                                                  email: emailcontroller.text,
+                                                  password:
+                                                      passwordcontroller.text);
+                                          isLoggedIn = true;
+                                          emailcontroller.clear();
+                                          passwordcontroller.clear();
+                                          setState(() {});
+                                          error.clear();
+                                         
+                                        } on FirebaseAuthException catch (e) {
+                                          if (e.code == 'user-not-found') {
+                                            error.write(
+                                                'No user found for that email.');
+                                          } else if (e.code ==
+                                              'wrong-password') {
+                                            error.write(
+                                                'Wrong password provided for that user');
+                                          }
+                                          print(error);
                                         }
-                                        print(error);
-                                      }
-                                      final snackBar = SnackBar(
-                                        content: Text(error.toString()),
-                                      );
-                                      if (isLoggedIn == true) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Homescreen()),
+                                        final snackBar = SnackBar(
+                                          content: Text(error.toString()),
                                         );
-                                      } else if (isLoggedIn == false) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(snackBar);
-                                      }
-                                    }),
-                              ),
+                                        if (isLoggedIn == true) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const Homescreen()),
+                                          );
+                                        } else if (isLoggedIn == false) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(snackBar);
+                                        }
+                                      })),
                               Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: ElevatedButton(
                                     child: const Text('Sign Up '),
-                                    style: Styles.loginStyle,
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.black,
+                                        fixedSize: Size(screenwidth * 0.33, 50),
+                                        textStyle: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                        )),
                                     onPressed: () async {
                                       error.clear();
                                       try {
@@ -137,6 +159,7 @@ class _HomeState extends State<Home> {
                                                     passwordcontroller.text);
                                         setState(() {});
                                         isLoggedIn = true;
+                                        updateDatabase();
                                         error.clear();
                                       } on FirebaseAuthException catch (e) {
                                         if (e.code == 'weak-password') {
@@ -172,9 +195,13 @@ class _HomeState extends State<Home> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.black,
-                                  fixedSize: const Size(200, 50)),
+                                  fixedSize: Size(screenwidth * 0.6, 50),
+                                  textStyle: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                  )),
                               onPressed: () async {
-                                if (emailcontroller.text == '') {
+                                if (emailcontroller.text == null) {
                                   const snackBar = SnackBar(
                                     content: Text('please enter a valid email'),
                                   );
@@ -184,6 +211,12 @@ class _HomeState extends State<Home> {
                                   await FirebaseAuth.instance
                                       .sendPasswordResetEmail(
                                           email: emailcontroller.text);
+                                          const snackBar = SnackBar(
+                                            content:Text('Reset email sent out')
+                                          );
+                                          ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+
                                 }
                               },
                               child: const Text('Forgot password?')),
@@ -199,5 +232,22 @@ class _HomeState extends State<Home> {
       ispassword = true;
     }
     setState(() {});
+  }
+
+/*
+updateDatabase() sends unique ID to realtime database. 
+Called after user successfully creates an account.
+*/
+  void updateDatabase() async {
+    try {
+      var u = user?.uid;
+      database.update({
+        u!: {
+          "Personal_Information": {"Email: ": emailcontroller.text}
+        }
+      }).then((_) => print("database updated"));
+    } catch (e) {
+      print("You got an error! $e");
+    }
   }
 }
