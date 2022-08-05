@@ -3,7 +3,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:staying_safe/screens/settings_screen.dart';
 import 'auth_screen.dart';
 import 'package:staying_safe/styles/styles.dart';
 
@@ -14,13 +13,15 @@ class SOSscreen extends StatefulWidget {
   _SOSscreenState createState() => _SOSscreenState();
 }
 
-//for settings and logout buttons.
 
-bool _isVisibleExit = false;
-bool _isVisibleTimer = true;
-CountDownController _controller = CountDownController();
+
 
 class _SOSscreenState extends State<SOSscreen> {
+//for settings and logout buttons.
+bool _isVisibleExit = false;
+bool _isVisibleTimer = true;
+
+CountDownController _controller = CountDownController();
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
@@ -42,10 +43,6 @@ class _SOSscreenState extends State<SOSscreen> {
             itemBuilder: (context) => [
                   const PopupMenuItem<int>(
                     value: 0,
-                    child: Text('Settings'),
-                  ),
-                  const PopupMenuItem<int>(
-                    value: 1,
                     child: Text('Log Out'),
                   ),
                 ])
@@ -77,7 +74,13 @@ class _SOSscreenState extends State<SOSscreen> {
                   'EMERGENCY',
                   style: TextStyle(color: Colors.black),
                 ),
-                onPressed: () {},
+                onPressed: () {setState(() {
+                    const snackBar = SnackBar(
+                                    content: Text('Emergency Services have been requested'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                  });},
                 style: Styles.sosTopEmergency,
               ),
               const Padding(
@@ -92,7 +95,13 @@ class _SOSscreenState extends State<SOSscreen> {
                 style: Styles.sosTopContact,
                 label: const Text('CONTACTS',
                     style: TextStyle(color: Colors.black)),
-                onPressed: () {},
+                onPressed: () {setState(() {
+                    const snackBar = SnackBar(
+                                    content: Text('Contact has been notified of your distress'),
+                                  );
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(snackBar);
+                  });},
               ),
             ],
           ),
@@ -158,9 +167,4 @@ class _SOSscreenState extends State<SOSscreen> {
                     child: const Text('EXIT SOS MODE'),
                   )
                 ],
-              ))
-        ],
-      ),
-    ));
-  }
-}
+              )),],),));}}
